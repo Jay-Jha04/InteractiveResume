@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --runInBand --watchAll --verbose",
-    "start": "node index.js"
+    "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --watchAll --verbose",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js"
   },
-  "engines":{
-    "node":"16.14.2"
+  "engines": {
+    "node": "16.14.2"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "winston-mongodb": "^5.0.7"
   },
   "devDependencies": {
+    "dotenv": "^16.0.1",
     "jest": "^28.1.1",
     "supertest": "^6.2.3"
   }

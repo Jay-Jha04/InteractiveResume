@@ -1,9 +1,9 @@
 const winston = require("winston");
 const mongoose = require("mongoose");
-const config = require("config");
+const config = require("../config/config");
 
 module.exports = function () {
-  const db = config.get("db");
+  const db = config("db");
 
   mongoose
     .connect(db, {

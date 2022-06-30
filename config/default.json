@@ -1,4 +1,0 @@
-{
-    "db": "mongodb://localhost:27017/resumedb01",
-    "port": "3900"
-}
