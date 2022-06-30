@@ -1,4 +1,4 @@
 node_modules/
-logFile.log/
-uncaughtExceptions.log/
+/*.log
 /.env
+
