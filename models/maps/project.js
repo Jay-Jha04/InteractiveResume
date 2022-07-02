@@ -11,5 +11,6 @@ exports.mapViewToModel = (source) => {
     project_images: [...source.Information.images],
     github_url: source.Information.githubUrl,
     project_url: source.Information.projectUrl,
+    tech_stack: Object.keys(source.Skills),
   };
 };

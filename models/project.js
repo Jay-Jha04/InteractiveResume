@@ -29,16 +29,8 @@ const projectSchema = new mongoose.Schema({
     maxlength: 5000,
   },
   tech_stack: {
-    frameworks: {
-      type: [frameworkSchema],
-    },
-    languages: {
-      type: [languageSchema],
-    },
-    databases: {
-      type: [String],
-      required: true,
-    },
+    type: [String],
+    required: true,
   },
   project_images: {
     type: [mongoose.Schema.Types.ObjectId],
@@ -62,11 +54,7 @@ const validateProject = (project) => {
     start_date: Joi.string().required(),
     end_date: Joi.string().required(),
     descriptions: Joi.string().required().min(10).max(5000),
-    tech_stack: {
-      frameworks: Joi.array().items(Joi.object()),
-      languages: Joi.array().items(Joi.object()),
-      databases: Joi.array().items(Joi.string()).required(),
-    },
+    tech_stack: Joi.array().items(Joi.string()).min(2),
     project_images: Joi.array().items(Joi.objectId()),
     github_url: Joi.string().required(),
     project_url: Joi.string(),
