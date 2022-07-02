@@ -46,7 +46,12 @@ const validateExperience = (experience) => {
     employement_type: Joi.string().required(),
     profile_headline: Joi.string().max(40).required(),
     description: Joi.string().max(1000),
-    companyId: Joi.objectId().required(),
+    company: Joi.object({
+      name: Joi.string().required(),
+      location: Joi.string().required(),
+      start_date: Joi.string().required(),
+      end_date: Joi.string().required(),
+    }).required(),
   });
 
   return schema.validate(experience);

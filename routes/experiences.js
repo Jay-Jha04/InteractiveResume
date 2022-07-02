@@ -20,7 +20,7 @@ router.post(
       return res.status(400).send(error.details[0].message);
     }
 
-    const company = await Company.findById(req.body.companyId);
+    const company = await req.body.company;
 
     if (!company) {
       return res.status(400).send("Invalid company...");
