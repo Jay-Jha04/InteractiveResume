@@ -10,31 +10,21 @@ const companySchema = new mongoose.Schema({
   location: {
     type: String,
     required: true,
+    trim: true,
   },
   start_date: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    trim: true,
     required: true,
   },
   end_date: {
-    type: Date,
-    default: null,
+    type: String,
+    trim: true,
+    required: true,
   },
 });
 
 const Company = mongoose.model("companies", companySchema);
 
-const validateCompany = (company) => {
-  const schema = Joi.object({
-    name: Joi.string().required(),
-    location: Joi.string().required(),
-    start_date: Joi.date().required(),
-    end_date: Joi.date(),
-  });
-
-  return schema.validate(company);
-};
-
 exports.Company = Company;
-exports.validateCompany = validateCompany;
 exports.companySchema = companySchema;

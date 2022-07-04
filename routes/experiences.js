@@ -22,7 +22,7 @@ router.post(
     if (error) {
       return res.status(400).send(error.details[0].message);
     }
-
+    
     const company = await new Company({ ...experience.company }).save();
 
     if (!company) {
