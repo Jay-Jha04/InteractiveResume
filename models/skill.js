@@ -13,13 +13,15 @@ const skillSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  framework: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "framework",
+  type: {
+    type: String,
+    enum: ["language", "framework", "database"],
+    required: true,
   },
-  language: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "language",
+  skill: {
+    type: String,
+    required: true,
+    trim: true,
   },
 });
 
@@ -29,8 +31,8 @@ const validateSkill = (skill) => {
   const schema = Joi.object({
     rate: Joi.number().min(0).max(10).required(),
     experience: Joi.string().required(),
-    frameworkId: Joi.objectId(),
-    languageId: Joi.objectId(),
+    type: Joi.string().required(),
+    skill: Joi.string().required(),
   });
 
   return schema.validate(skill);
