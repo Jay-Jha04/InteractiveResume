@@ -1,7 +1,5 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
-const { frameworkSchema } = require("../models/framework");
-const { languageSchema } = require("../models/language");
 
 const projectSchema = new mongoose.Schema({
   title: {
