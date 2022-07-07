@@ -4,6 +4,7 @@ const routerWrapper = require("../middleware/routerWrapper");
 const { Company } = require("../models/company");
 const { validateExperience, Experience } = require("../models/experience");
 const { mapViewToModel } = require("../models/maps/experience");
+const { Profile } = require("../models/profile");
 
 router.get(
   "/",
@@ -22,7 +23,8 @@ router.post(
     if (error) {
       return res.status(400).send(error.details[0].message);
     }
-    
+
+    let profile = await Profile.findOne();
     const company = await new Company({ ...experience.company }).save();
 
     if (!company) {
@@ -30,7 +32,14 @@ router.post(
     }
 
     experience = new Experience({ ...experience, ["company"]: company });
-    await experience.save();
+    experience = await experience.save();
+
+    if (!experience) {
+      res.status(500).send("An unknown error occurred!");
+    }
+
+    profile["experiences"].push(experience);
+    await profile.save();
     res.send(experience);
   })
 );

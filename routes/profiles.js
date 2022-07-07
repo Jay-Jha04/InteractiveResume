@@ -2,9 +2,7 @@ const express = require("express");
 const router = express.Router();
 const routerWrapper = require("../middleware/routerWrapper");
 const { validateProfile, Profile } = require("../models/profile");
-const { Experience } = require("../models/experience");
-const { Skill } = require("../models/skill");
-const { Image } = require("../models/image");
+const { mapViewToModel } = require("../models/maps/profile");
 
 router.get(
   "/",
@@ -15,37 +13,29 @@ router.get(
   })
 );
 
-router.post(
-  "/",
+router.put(
+  "/:id",
   routerWrapper(async (req, res) => {
-    const { error } = validateProfile(req.body);
+    const profile = mapViewToModel(req.body);
+    const { error } = validateProfile(profile);
+
     if (error) {
       return res.status(400).send(error.details[0].message);
     }
 
-    const experiences = await Experience.find()
-      .where("_id")
-      .in(req.body.experienceIds);
+    const response = await Profile.findByIdAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: { ...profile },
+      },
+      { new: true }
+    );
 
-    const skills = await Skill.find().where("_id").in(req.body.skillIds);
-    const image = await Image.findById(req.body.profile_image);
-
-    if (!experiences && !skills && !image) {
-      return res.status(400).send("Invalid profile informations...");
+    if (!response) {
+      return res.status(500).send("An unknown error occurred");
     }
 
-    const profile = new Profile({
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      location: req.body.location,
-      about_yourself: req.body.about_yourself,
-      experiences,
-      skills,
-      profile_image: req.body.profile_image,
-    });
-
-    await profile.save();
-    res.send(profile);
+    return res.status(202).send(response);
   })
 );
 
