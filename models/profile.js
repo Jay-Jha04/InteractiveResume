@@ -43,12 +43,13 @@ const Profile = mongoose.model(
 const validateProfile = (profile) => {
   const schema = Joi.object({
     first_name: Joi.string().required(),
-    last_name: Joi.string(),
+    last_name: Joi.string().allow(""),
     location: Joi.string().required(),
     about_yourself: Joi.string().max(1000).required(),
-    experienceIds: Joi.array().items(Joi.objectId()).required(),
-    skillIds: Joi.array().items(Joi.objectId()).required(),
-    profile_image: Joi.objectId(),
+    profile_image: Joi.when("type", {
+      is: "objectId",
+      then: Joi.objectId(),
+    }),
   });
 
   return schema.validate(profile);
