@@ -20,12 +20,9 @@ router.get(
 );
 
 router.get(
-  "/profile-image/:profileId",
+  "/profile-image/:id",
   routerWrapper(async (req, res) => {
-    const { profile_image } = await Profile.findById(
-      req.params.profileId
-    ).select("profile_image");
-    const image = await Image.findById(profile_image);
+    const image = await Image.findById(req.params.id);
 
     return res.send(image);
   })
@@ -80,7 +77,20 @@ router.post(
 
     await image.save();
 
-    return res.send(image._id);
+    return res.send(image);
+  })
+);
+
+router.delete(
+  "/profile-image/:id",
+  routerWrapper(async (req, res) => {
+    const response = await Image.deleteOne({ _id: req.params.id });
+
+    if (!response["acknowledged"]) {
+      return res.status(500).send("An unknown error occurred!");
+    }
+
+    return res.status(204).send("Deleted");
   })
 );
 
