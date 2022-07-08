@@ -16,14 +16,13 @@ router.get(
 router.put(
   "/:id",
   routerWrapper(async (req, res) => {
-    console.log(req.body);
     const profile = mapViewToModel(req.body);
     const { error } = validateProfile(profile);
 
     if (error) {
       return res.status(400).send(error.details[0].message);
     }
-    console.log(profile);
+
     const response = await Profile.findByIdAndUpdate(
       { _id: req.params.id },
       {
