@@ -4,6 +4,7 @@ const { Skill, validateSkill } = require("../models/skill");
 const routerWrapper = require("../middleware/routerWrapper");
 const { mapViewToModel } = require("../models/maps/skill");
 const { Profile } = require("../models/profile");
+const authorization = require("../middleware/authorization");
 
 router.get(
   "/",
@@ -23,6 +24,7 @@ router.get(
 
 router.post(
   "/",
+  authorization,
   routerWrapper(async (req, res) => {
     let skill = mapViewToModel(req.body);
     const { error } = validateSkill(skill);

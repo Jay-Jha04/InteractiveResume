@@ -1,4 +1,5 @@
 const express = require("express");
+const authorization = require("../middleware/authorization");
 const router = express.Router();
 const routerWrapper = require("../middleware/routerWrapper");
 const { Company } = require("../models/company");
@@ -16,6 +17,7 @@ router.get(
 
 router.post(
   "/",
+  authorization,
   routerWrapper(async (req, res) => {
     let experience = mapViewToModel(req.body);
     const { error } = validateExperience(experience);
