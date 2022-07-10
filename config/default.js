@@ -1,4 +1,5 @@
-require("dotenv").config();
+//Uncomment while running application on production environment on local system
+// require('dotenv').config();
 
 const configurations = {
   port: "3900",
