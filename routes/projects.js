@@ -3,6 +3,7 @@ const routerWrapper = require("../middleware/routerWrapper");
 const { validateProject, Project } = require("../models/project");
 const router = express.Router();
 const { mapViewToModel } = require("../models/maps/project");
+const authorization = require("../middleware/authorization");
 
 router.get(
   "/",
@@ -14,6 +15,7 @@ router.get(
 
 router.post(
   "/",
+  authorization,
   routerWrapper(async (req, res) => {
     const projectModel = mapViewToModel(req.body);
     if (!projectModel) {

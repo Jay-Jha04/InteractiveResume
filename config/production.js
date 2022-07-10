@@ -3,6 +3,7 @@
 
 const configurations = {
   db: `${process.env.Interactive_Resume_db}`,
+  secretKey: `${process.env.Interactive_Resume_secretKey}`,
 };
 
 exports.getProductionConfigurations = function (key) {

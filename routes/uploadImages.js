@@ -1,4 +1,5 @@
 const express = require("express");
+const authorization = require("../middleware/authorization");
 const router = express.Router();
 const routerWrapper = require("../middleware/routerWrapper");
 const ImageStorage = require("../middleware/setImageStorage");
@@ -30,7 +31,7 @@ router.get(
 
 router.post(
   "/",
-  ImageStorage.array("images", 12),
+  [authorization, ImageStorage.array("images", 12)],
   routerWrapper(async (req, res) => {
     const files = req.files;
 
@@ -60,7 +61,7 @@ router.post(
 
 router.post(
   "/profile-image",
-  ImageStorage.single("image"),
+  [authorization, ImageStorage.single("image")],
   routerWrapper(async (req, res) => {
     const file = req.file;
 
@@ -83,6 +84,7 @@ router.post(
 
 router.delete(
   "/profile-image/:id",
+  authorization,
   routerWrapper(async (req, res) => {
     const response = await Image.deleteOne({ _id: req.params.id });
 

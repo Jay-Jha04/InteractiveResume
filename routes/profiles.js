@@ -3,6 +3,7 @@ const router = express.Router();
 const routerWrapper = require("../middleware/routerWrapper");
 const { validateProfile, Profile } = require("../models/profile");
 const { mapViewToModel } = require("../models/maps/profile");
+const authorization = require("../middleware/authorization");
 
 router.get(
   "/",
@@ -15,6 +16,7 @@ router.get(
 
 router.put(
   "/:id",
+  authorization,
   routerWrapper(async (req, res) => {
     const profile = mapViewToModel(req.body);
     const { error } = validateProfile(profile);

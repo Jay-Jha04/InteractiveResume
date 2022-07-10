@@ -4,6 +4,7 @@ const experience = require("../routes/experiences");
 const profiles = require("../routes/profiles");
 const projects = require("../routes/projects");
 const uploadImages = require("../routes/uploadImages");
+const auth = require("../routes/auth");
 const error = require("../middleware/error");
 
 module.exports = function (app) {
@@ -13,5 +14,6 @@ module.exports = function (app) {
   app.use("/api/profiles", profiles);
   app.use("/api/projects", projects);
   app.use("/api/upload-images", uploadImages);
+  app.use("/api/auth", auth);
   app.use(error);
 };
